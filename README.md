@@ -74,7 +74,7 @@ CivilStreamEngine/
 
 ```bash
 # Clone the repository
-git clone https://github.com/ajayabnave-ctrl/CivilStreamEngine.git
+git clone https://github.com/ajayabnave-ctrl/CivilStream_Engine.git
 
 # Change directory
 cd CivilStreamEngine
