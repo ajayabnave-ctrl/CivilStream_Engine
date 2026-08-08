@@ -54,49 +54,50 @@ The long-term goal is to develop intelligent tools that connect traditional civi
 
 ## 📐 Architecture & Technology Stack
 
-```markdown
+CivilStream Engine uses a modular architecture that separates the WPF user interface, engineering computation, terrain processing, 3D visualization, and CAD/BIM export layers.
+
 ```mermaid
 flowchart TD
-
     A["Civil / Survey / Geospatial Data"]
+    A --> B["CivilStream.DesktopUI - WPF Application"]
+    B --> C["CivilStream.Core - Engineering Engine"]
 
-    A --> B["CivilStream.DesktopUI<br/>WPF Application"]
+    C --> D["Terrain & Surface Processing"]
+    C --> E["TIN / Delaunay Triangulation"]
+    C --> F["Elevation & Coordinate Processing"]
+    C --> G["Contour Generation"]
+    C --> H["Cross-Section Profiling"]
 
-    B --> C["CivilStream.Core<br/>Engineering Engine"]
-
-    C --> D["Terrain & Surface<br/>Processing"]
-    C --> E["TIN / Delaunay<br/>Triangulation"]
-    C --> F["Elevation & Coordinate<br/>Processing"]
-    C --> G["Contour<br/>Generation"]
-    C --> H["Cross-Section<br/>Profiling"]
-
-    D --> I["Engineering<br/>Analysis"]
+    D --> I["Engineering Analysis"]
     E --> I
     F --> I
     G --> I
     H --> I
 
-    I --> J["CAD / BIM / GIS<br/>Outputs"]
+    I --> J["CAD / BIM / GIS Outputs"]
 
     J --> K["AutoCAD DXF"]
     J --> L["LandXML"]
     J --> M["IFC4 / OpenBIM"]
 
-    B --> N["HelixToolkit.Wpf<br/>3D Visualization"]
-
-    C --> O["NetTopologySuite<br/>Geometry Processing"]
-
-    B --> P["netDxf<br/>CAD Export"]
+    B --> N["HelixToolkit.Wpf - 3D Visualization"]
+    C --> O["NetTopologySuite - Geometry Processing"]
+    B --> P["netDxf - CAD Export"]
 ```
+
+### Technology Stack
 
 | Component | Technology | Purpose |
 | :--- | :--- | :--- |
-| **Core Framework** | .NET 8.0 C# | High-performance 64-bit runtime |
-| **User Interface** | WPF (Windows Presentation Foundation) | Modern desktop GUI & 2D Canvas rendering |
-| **3D Rendering** | [HelixToolkit.Wpf](https://github.com/helix-toolkit/helix-toolkit) | Dynamic 3D viewport navigation, lighting, and material shaders |
-| **Geometry & Delaunay** | [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite) | Spatial operations and Delaunay Triangulation Builder |
-| **CAD Export** | [netDxf](https://github.com/hapl通/netDxf) | Reading and writing AutoCAD DXF format files |
-
+| **Core Framework** | .NET 8 | Application framework and runtime |
+| **Programming Language** | C# 12 | Engineering and application development |
+| **User Interface** | WPF | Windows desktop application interface |
+| **3D Visualization** | [HelixToolkit.Wpf](https://github.com/helix-toolkit/helix-toolkit) | 3D terrain visualization |
+| **Geometry Processing** | [NetTopologySuite](https://github.com/NetTopologySuite/NetTopologySuite) | Spatial geometry and terrain processing |
+| **CAD Export** | [netDxf](https://github.com/haplokuon/netDxf) | AutoCAD DXF generation |
+| **Terrain Data** | OpenTopography | Digital elevation model data |
+| **Satellite Imagery** | ArcGIS World Imagery | Terrain imagery visualization |
+| **BIM / Data Exchange** | IFC / LandXML | Civil and OpenBIM interoperability |
 ---
 
 ## 📁 Repository Structure
