@@ -54,13 +54,39 @@ The long-term goal is to develop intelligent tools that connect traditional civi
 
 ## 📐 Architecture & Technology Stack
 
+```markdown
 ```mermaid
-graph TD
-    UI[CivilStream.DesktopUI - WPF Application] -->|References| Core[CivilStream.Core - Class Library]
-    UI -->|3D Viewport| Helix[HelixToolkit.Wpf]
-    UI -->|CAD Exporter| netDxf[netDxf]
-    UI -->|Spatial & Triangulation| NTS[NetTopologySuite]
-    Core -->|Spatial Checks| NTS
+flowchart TD
+
+    A["Civil / Survey / Geospatial Data"]
+
+    A --> B["CivilStream.DesktopUI<br/>WPF Application"]
+
+    B --> C["CivilStream.Core<br/>Engineering Engine"]
+
+    C --> D["Terrain & Surface<br/>Processing"]
+    C --> E["TIN / Delaunay<br/>Triangulation"]
+    C --> F["Elevation & Coordinate<br/>Processing"]
+    C --> G["Contour<br/>Generation"]
+    C --> H["Cross-Section<br/>Profiling"]
+
+    D --> I["Engineering<br/>Analysis"]
+    E --> I
+    F --> I
+    G --> I
+    H --> I
+
+    I --> J["CAD / BIM / GIS<br/>Outputs"]
+
+    J --> K["AutoCAD DXF"]
+    J --> L["LandXML"]
+    J --> M["IFC4 / OpenBIM"]
+
+    B --> N["HelixToolkit.Wpf<br/>3D Visualization"]
+
+    C --> O["NetTopologySuite<br/>Geometry Processing"]
+
+    B --> P["netDxf<br/>CAD Export"]
 ```
 
 | Component | Technology | Purpose |
