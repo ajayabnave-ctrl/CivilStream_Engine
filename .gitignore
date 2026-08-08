@@ -1,4 +1,4 @@
-## Ignore Visual Studio & .NET build output
+## Visual Studio & .NET
 .vs/
 bin/
 obj/
@@ -7,13 +7,17 @@ obj/
 *.sln.docstates
 *.suo
 
-## Output directories
+## Application output
 Output/
 
 ## OS specific
-[Th]umbs.db
-[Dd]esktop.ini
+Thumbs.db
+Desktop.ini
 .DS_Store
 
-## Log files
+## Logs
 *.log
+
+## Build artifacts
+*.pdb
+*.cache
