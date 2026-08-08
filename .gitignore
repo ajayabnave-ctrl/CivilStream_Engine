@@ -1,0 +1,19 @@
+## Ignore Visual Studio & .NET build output
+.vs/
+bin/
+obj/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+## Output directories
+Output/
+
+## OS specific
+[Th]umbs.db
+[Dd]esktop.ini
+.DS_Store
+
+## Log files
+*.log

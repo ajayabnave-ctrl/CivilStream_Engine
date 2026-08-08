@@ -1,0 +1,260 @@
+<Window x:Class="CivilStream.DesktopUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:helix="http://helix-toolkit.org/wpf"
+        Title="CivilStream BIM - Corridor Grading Workspace" 
+        Height="900" Width="1600"
+        MinWidth="1280" MinHeight="720"
+        Background="#121212">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#1A1A1A" BorderBrush="#2D2D2D" BorderThickness="0,0,0,1" Padding="24,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="#2563EB" Width="36" Height="36" CornerRadius="4" Margin="0,0,12,0">
+                        <TextBlock Text="▲" Foreground="White" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="CivilStream Web-BIM" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                        <TextBlock Text="Project: Pune Highway Junction Alt-02" Foreground="#9CA3AF" FontSize="11" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="#141414" BorderBrush="#14532D" BorderThickness="1" CornerRadius="12" Padding="12,6" Margin="0,0,16,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Width="6" Height="6" Fill="#4ADE80" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <TextBlock Text=".NET Core Engine Connected" Foreground="#4ADE80" FontSize="11" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Button x:Name="BtnReset" Click="BtnReset_Click" Content="🔄 Reset Workspace" Background="#DC2626" Foreground="White" Padding="16,8" BorderThickness="0" Cursor="Hand" FontWeight="Bold" Margin="0,0,8,0"/>
+                    <Button Content="Projects" Background="#2D2D2D" Foreground="White" Padding="16,8" BorderThickness="0" Cursor="Hand"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="65*"/>
+                <ColumnDefinition Width="35*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Background="#1E1E1E">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="240"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Background="#141414">
+
+                    <helix:HelixViewport3D x:Name="Viewport" ShowFrameRate="True" RotateGesture="LeftClick" PanGesture="MiddleClick"
+                                           MouseMove="Viewport_MouseMove" MouseLeave="Viewport_MouseLeave" 
+                                           PreviewMouseLeftButtonDown="Viewport_PreviewMouseLeftButtonDown"
+                                           PreviewMouseRightButtonDown="Viewport_PreviewMouseRightButtonDown">
+                        <helix:DefaultLights />
+                        <helix:GridLinesVisual3D Width="1000" Length="1000" MajorDistance="50" MinorDistance="10" Thickness="0.1"/>
+                        <ModelVisual3D x:Name="TerrainModelContainer" />
+                        <helix:LinesVisual3D x:Name="MinorContoursVisual" Color="#888888" Thickness="1.0"/>
+                        <helix:LinesVisual3D x:Name="MajorContoursVisual" Color="#FFFFFF" Thickness="3.0"/>
+                        <helix:LinesVisual3D x:Name="ProfileLineVisual" Color="#EF4444" Thickness="4.0"/>
+                        <helix:SphereVisual3D x:Name="ProfileTracker3D" Radius="0" Fill="Yellow" />
+                    </helix:HelixViewport3D>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16" Panel.ZIndex="10">
+                        <Button Content="🌐" Width="36" Height="36" Background="#1A1A1A" Foreground="#E0E0E0" BorderBrush="#3D3D3D" BorderThickness="1" Margin="0,0,8,0" ToolTip="Orbit View"/>
+                        <Button x:Name="BtnToggleWireframe" Click="BtnToggleWireframe_Click" Content="▤" Width="36" Height="36" Background="#1A1A1A" Foreground="#E0E0E0" BorderBrush="#3D3D3D" BorderThickness="1" Margin="0,0,8,0" ToolTip="Wireframe Toggle" Cursor="Hand"/>
+                        <Button x:Name="BtnToggleHeatmap" Click="BtnToggleHeatmap_Click" Content="🌈" Width="36" Height="36" Background="#1A1A1A" Foreground="#E0E0E0" BorderBrush="#3D3D3D" BorderThickness="1" Margin="0,0,8,0" ToolTip="Toggle Elevation Heatmap" Cursor="Hand"/>
+                        <Button x:Name="BtnToggleSatellite" Click="BtnToggleSatellite_Click" Content="🛰" Width="36" Height="36" Background="#1A1A1A" Foreground="#E0E0E0" BorderBrush="#3D3D3D" BorderThickness="1" Margin="0,0,8,0" ToolTip="Toggle Satellite Draping" Cursor="Hand"/>
+                        <Button x:Name="BtnProfileTool" Click="BtnProfileTool_Click" Content="📏" Width="36" Height="36" Background="#1A1A1A" Foreground="#E0E0E0" BorderBrush="#3D3D3D" BorderThickness="1" ToolTip="Draw 2D Elevation Profile" Cursor="Hand"/>
+                    </StackPanel>
+
+                    <Border x:Name="ElevationLegend" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,24,0" Background="#CC1A1A1A" CornerRadius="6" BorderBrush="#3D3D3D" BorderThickness="1" Padding="16" Panel.ZIndex="10">
+                        <StackPanel Orientation="Horizontal" Height="250">
+                            <Grid Margin="0,0,12,0">
+                                <TextBlock x:Name="TxtMaxElev" Text="---" Foreground="#F87171" FontSize="11" FontWeight="Bold" VerticalAlignment="Top"/>
+                                <TextBlock x:Name="TxtMidElev" Text="---" Foreground="#A7F3D0" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="TxtMinElev" Text="---" Foreground="#60A5FA" FontSize="11" FontWeight="Bold" VerticalAlignment="Bottom"/>
+                            </Grid>
+                            <Border Width="16" CornerRadius="4" BorderBrush="#111" BorderThickness="1">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="Red" Offset="0.0"/>
+                                        <GradientStop Color="Yellow" Offset="0.25"/>
+                                        <GradientStop Color="LimeGreen" Offset="0.5"/>
+                                        <GradientStop Color="Cyan" Offset="0.75"/>
+                                        <GradientStop Color="Blue" Offset="1.0"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="24,0,0,24" Background="#E6111111" BorderBrush="#3D3D3D" BorderThickness="1" CornerRadius="6" Padding="16,12" Panel.ZIndex="100" MinWidth="200">
+                        <StackPanel>
+                            <TextBlock Text="CURSOR TRACKING" Foreground="#6B7280" FontSize="10" FontWeight="Bold" Margin="0,0,0,8"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="ELEV (Z):" Foreground="#9CA3AF" FontSize="12" FontWeight="Bold" Margin="0,0,12,4"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TxtStaticZ" Text="---" Foreground="#FBBF24" FontSize="12" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="EAST (X):" Foreground="#9CA3AF" FontSize="12" FontWeight="Bold" Margin="0,0,12,4"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TxtStaticE" Text="---" Foreground="#E5E7EB" FontSize="12" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="NORTH (Y):" Foreground="#9CA3AF" FontSize="12" FontWeight="Bold"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" x:Name="TxtStaticN" Text="---" Foreground="#E5E7EB" FontSize="12" HorizontalAlignment="Right"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="1" Background="#161616">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Background="#1A1A1A" BorderBrush="#2D2D2D" BorderThickness="0,1,0,1" Padding="16,0">
+                        <Grid>
+                            <TextBlock x:Name="TxtProfileStatus" Text="📈 VERTICAL PROFILE ALIGNMENT" Foreground="#D1D5DB" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <Border x:Name="ProfileCanvasWrapper" Grid.Row="1" Margin="12,12,12,0" BorderBrush="#262626" BorderThickness="2" CornerRadius="4" Background="#111"
+                            MouseWheel="ProfileCanvas_MouseWheel"
+                            MouseLeftButtonDown="ProfileCanvas_MouseLeftButtonDown"
+                            MouseLeftButtonUp="ProfileCanvas_MouseLeftButtonUp"
+                            MouseMove="ProfileCanvas_MouseMove"
+                            ClipToBounds="True">
+                        <Grid>
+                            <Canvas x:Name="ProfileCanvas" ClipToBounds="True">
+                                <TextBlock x:Name="TxtCanvasPlaceholder" Text="Activate the Ruler [📏] tool and click two points on the 3D surface to generate a cross-section profile." Foreground="#555" FontSize="12" Canvas.Left="20" Canvas.Top="20" FontFamily="Consolas"/>
+                            </Canvas>
+
+                            <Button x:Name="BtnProfileZoomAll" Click="BtnProfileZoomAll_Click" Content="⛶ Zoom All" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" Background="#222" Foreground="#9CA3AF" BorderThickness="1" BorderBrush="#444" Padding="8,4" FontSize="10" Cursor="Hand" Visibility="Collapsed"/>
+                        </Grid>
+                    </Border>
+
+                    <Slider x:Name="ProfileSlider" Grid.Row="2" Margin="62,8,62,12" Visibility="Collapsed" Minimum="0" Maximum="100" IsSnapToTickEnabled="True" TickFrequency="1" ValueChanged="ProfileSlider_ValueChanged" />
+                </Grid>
+            </Grid>
+
+            <Border Grid.Column="1" Background="#1A1A1A" BorderBrush="#2D2D2D" BorderThickness="1,0,0,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ScrollViewer x:Name="SidebarScrollViewer" Grid.Row="0" VerticalScrollBarVisibility="Auto" Padding="24">
+                        <StackPanel>
+                            <TextBlock Text="DATA INGESTION" FontSize="11" FontWeight="Bold" Foreground="#9CA3AF" Margin="0,0,0,8"/>
+                            <Button x:Name="BtnImportCsv" Click="BtnImportCsv_Click" Background="#141414" BorderBrush="#3D3D3D" BorderThickness="2" Padding="20" Cursor="Hand">
+                                <StackPanel>
+                                    <TextBlock Text="☁" Foreground="#6B7280" FontSize="24" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Click to Load Survey Data (.csv, .txt, .xml, .dxf)" Foreground="#E5E7EB" FontSize="13" FontWeight="Medium" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="BtnImportKml" Click="BtnImportKml_Click" Background="#141414" BorderBrush="#3D3D3D" BorderThickness="2" Padding="20" Cursor="Hand" Margin="0,8,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="📍" Foreground="#6B7280" FontSize="24" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Import KML Boundary &amp; Fetch Terrain" Foreground="#E5E7EB" FontSize="13" FontWeight="Medium" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </Button>
+
+                            <StackPanel Margin="0,8,0,0">
+                                <TextBlock Text="OpenTopography API Key" Foreground="#9CA3AF" FontSize="11" Margin="0,0,0,4"/>
+                                <PasswordBox x:Name="TxtOpenTopoApiKey" Background="#141414" Foreground="White" BorderBrush="#3D3D3D" Padding="8,6" FontSize="13"/>
+                            </StackPanel>
+
+                            <TextBlock Text="TOPOGRAPHY &amp; CONTOURS" FontSize="11" FontWeight="Bold" Foreground="#9CA3AF" Margin="0,24,0,8"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,4,0">
+                                    <TextBlock Text="Minor Interval (m)" Foreground="#9CA3AF" FontSize="11" Margin="0,0,0,4"/>
+                                    <TextBox x:Name="TxtMinorInterval" Text="1.0" Background="#141414" Foreground="White" BorderBrush="#3D3D3D" Padding="8,6" FontSize="13" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Margin="4,0,0,0">
+                                    <TextBlock Text="Major Interval (m)" Foreground="#9CA3AF" FontSize="11" Margin="0,0,0,4"/>
+                                    <TextBox x:Name="TxtMajorInterval" Text="5.0" Background="#141414" Foreground="White" BorderBrush="#3D3D3D" Padding="8,6" FontSize="13" FontWeight="Bold"/>
+                                </StackPanel>
+                            </Grid>
+                            <Button x:Name="BtnGenerateContours" Click="BtnGenerateContours_Click" Margin="0,12,0,0" Content="Generate Contours" Background="#2563EB" Foreground="White" BorderThickness="0" Padding="16,10" Cursor="Hand" FontWeight="Bold"/>
+
+                            <TextBlock Text="⚙ DESIGN GUARDRAILS" FontSize="11" FontWeight="Bold" Foreground="#D1D5DB" Margin="0,24,0,8"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                                    <TextBlock Text="Design Speed Target" Foreground="#9CA3AF" FontSize="11" Margin="0,0,0,4"/>
+                                    <TextBox Text="80" Background="#141414" Foreground="White" BorderBrush="#3D3D3D" Padding="8,6" FontSize="13" FontWeight="Bold"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                                    <TextBlock Text="Max Super-Elevation" Foreground="#9CA3AF" FontSize="11" Margin="0,0,0,4"/>
+                                    <TextBox Text="7" Background="#141414" Foreground="White" BorderBrush="#3D3D3D" Padding="8,6" FontSize="13" FontWeight="Bold"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <StackPanel x:Name="ProfileEditorPanel" Visibility="Collapsed" Margin="0,24,0,0">
+                                <TextBlock Text="📍 PROFILE VERTICES EDITOR" FontSize="11" FontWeight="Bold" Foreground="#FBBF24" Margin="0,0,0,8"/>
+                                <TextBlock Text="Edit horizontal coordinates (X, Y in meters) to fine-tune alignment. Elevation snaps to terrain." TextWrapping="Wrap" FontSize="11" Foreground="#9CA3AF" Margin="0,0,0,12"/>
+                                <ScrollViewer MaxHeight="250" VerticalScrollBarVisibility="Auto">
+                                    <StackPanel x:Name="StackProfileVertices" />
+                                </ScrollViewer>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <Border Grid.Row="1" Background="#141414" BorderBrush="#2D2D2D" BorderThickness="0,1,0,0" Padding="24">
+                        <StackPanel>
+                            <TextBlock Text="PRODUCTION EXPORTS HUB" FontSize="11" FontWeight="Bold" Foreground="#9CA3AF" Margin="0,8,0,8"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Button Grid.Row="0" Grid.Column="0" x:Name="BtnExportDxf" Click="BtnExportDxf_Click" Content="Export Contours (DXF)" Margin="0,0,4,4" Padding="12,10" Background="#222" Foreground="#60A5FA" BorderBrush="#333" HorizontalContentAlignment="Left" Cursor="Hand" FontWeight="Bold"/>
+                                <Button Grid.Row="0" Grid.Column="1" x:Name="BtnExportIfc" Click="BtnExportIfc_Click" Content="Export IFC4 OpenBIM" Margin="4,0,0,4" Padding="12,10" Background="#222" Foreground="#4ADE80" BorderBrush="#333" HorizontalContentAlignment="Left" Cursor="Hand" FontWeight="Bold"/>
+                                <Button Grid.Row="1" Grid.Column="0" Content="Quantity Excel List" Margin="0,4,4,0" Padding="12,10" Background="#222" Foreground="White" BorderBrush="#333" HorizontalContentAlignment="Left"/>
+                                <Button Grid.Row="1" Grid.Column="1" x:Name="BtnExportLandXml" Click="BtnExportLandXml_Click" Content="Export Civil 3D (LandXML)" Margin="4,4,0,0" Padding="12,10" Background="#222" Foreground="#FBBF24" BorderBrush="#333" HorizontalContentAlignment="Left" Cursor="Hand" FontWeight="Bold"/>
+                            </Grid>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,12,0,0" HorizontalAlignment="Right">
+                                <TextBlock x:Name="TxtPointCount" Text="Points Loaded: 0" FontSize="11" Foreground="#6B7280" Margin="0,0,12,0"/>
+                                <TextBlock x:Name="TxtStatus" Text="Status: Idle" FontSize="11" Foreground="#6B7280"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

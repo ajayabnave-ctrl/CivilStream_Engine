@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="CivilStream.Core/CivilStream.Core.csproj" />
+  <Project Path="CivilStream.DesktopUI/CivilStream.DesktopUI.csproj" />
+</Solution>
