@@ -1,11 +1,41 @@
-# CivilStreamEngine 🌊🏔️
+# CivilStream Engine 🌊🏔️
 
-> **A high-performance C# .NET 8.0 WPF desktop application for terrain modeling, topographic contour generation, 2D cross-sectional profiling, and OpenBIM/CAD data export.**
+> **A high-performance C#/.NET 8 WPF desktop application for civil engineering terrain modeling, topographic analysis, cross-sectional profiling, and OpenBIM/CAD workflows.**
 
-[![Framework](https://img.shields.io/badge/.NET-8.0-512BD4?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
-[![Platform](https://img.shields.io/badge/Platform-Windows%20WPF-0078D6?style=flat-square&logo=windows)](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/)
-[![License](https://img.shields.io/badge/License-MIT-green.style=flat-square)](LICENSE)
+CivilStream Engine is being developed as a modern engineering platform for processing civil and terrain data and transforming it into practical visualization, analysis, and BIM/CAD workflows.
 
+[![.NET 8](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![C#](https://img.shields.io/badge/C%23-12-239120?logo=csharp&logoColor=white)](https://learn.microsoft.com/dotnet/csharp/)
+[![Platform](https://img.shields.io/badge/Platform-Windows-0078D4?logo=windows&logoColor=white)](https://www.microsoft.com/windows/)
+[![WPF](https://img.shields.io/badge/UI-WPF-0078D4)](https://learn.microsoft.com/dotnet/desktop/wpf/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+---
+
+## 🚀 Key Capabilities
+
+- 🌍 Terrain and surface data processing
+- 📐 Topographic contour generation
+- 📊 2D cross-sectional profiling
+- 📁 CSV, TXT, XML, KML and KMZ data processing
+- 🏗️ Civil/AEC engineering workflows
+- 🔄 OpenBIM/CAD data exchange
+- 🖥️ Windows desktop application
+- ⚡ C# / .NET 8 / WPF architecture
+
+## 🏗️ Project Vision
+
+CivilStream Engine is the computational foundation for the **Civil View** desktop application.
+
+**CivilStream Engine**  
+↓  
+Engineering Data & Processing  
+↓  
+**Civil View**  
+↓  
+Visualization & Analysis
+
+The long-term goal is to develop intelligent tools that connect traditional civil engineering workflows with **BIM, OpenBIM, GIS, automation, and AI-assisted engineering workflows**.
 ---
 
 ## 🌟 Key Features
